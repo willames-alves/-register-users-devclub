@@ -1,8 +1,15 @@
+# cadastro de usuarios
+
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto desenvolvido no formacao fullstackdevclub
+com o objetivo de aprendizado do framework react e suas bibliotecas mais utilizadas
 
-Currently, two official plugins are available:
+o propjeto bassicamente possui um formulario de cadastro de usuario com nome idade email e uma tela de listagem de usuarios
+enviado para um backend local implementado anteriormente
+utilizando bibliotecas de navegacao requisicao e estilizacao
+react route styled components e axios
+con validações de informaçoes antes do envio e listagem das infromações cadastradas
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
