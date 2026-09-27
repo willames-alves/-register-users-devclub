@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import api from "../../services/api";
+
 import {
   Container,
   Title,
@@ -10,16 +13,21 @@ import {
 } from "./styles";
 
 import USERSIMG from "../../assets/users.png";
-import { useRef } from "react";
 
 function Home() {
   const inputName = useRef();
   const inputAge = useRef();
   const inputEmail = useRef();
 
-  function handleRegisterUser() {
+  async function handleRegisterUser() {
+    const data = await api.post("/users", {
+      name: inputName.current.value,
+      age: inputAge.current.value,
+      email: inputEmail.current.value,
+    });
+
+    console.log(data);
     // event.preventDefault();
-    console.log(inputName.current.value);
   }
 
   return (
