@@ -90,5 +90,4 @@ npm start
 # O servidor rodará na porta 5173 (http://localhost:5173)
 ```
 
-link
 Acesse o repositorio do Back-end: [register-users-backend-devclub](https://github.com/willames-alves/register-users-backend-devclub.git)
