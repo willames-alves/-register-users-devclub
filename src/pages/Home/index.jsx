@@ -1,55 +1,81 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router";
 import api from "../../services/api";
 
 import {
   Container,
   Title,
-  TopBackground,
   Form,
   ContainerInput,
   Input,
-  Button,
   InputLabel,
 } from "./styles";
 
-import USERSIMG from "../../assets/users.png";
+import { Button } from "../../components/Button";
+import { TopBackground } from "../../components/TopBackground";
 
 function Home() {
   const inputName = useRef();
   const inputAge = useRef();
   const inputEmail = useRef();
 
-  async function handleRegisterUser() {
-    const data = await api.post("/users", {
-      name: inputName.current.value,
-      age: inputAge.current.value,
-      email: inputEmail.current.value,
-    });
+  async function handleRegisterUser(event) {
+    // Previne o recarregamento padrão da página caso use um <form onSubmit>
+    event.preventDefault();
 
-    console.log(data);
-    // event.preventDefault();
+    const name = inputName.current.value.trim();
+    const age = inputAge.current.value.trim();
+    const email = inputEmail.current.value.trim();
+
+    // Validação simples no front-end
+    if (!name || !age || !email) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    try {
+      const response = await api.post("/users", {
+        name,
+        age: Number(age), // Garante que a idade vai como número
+        email,
+      });
+
+      console.log("Usuário criado:", response.data);
+      alert("Usuário cadastrado com sucesso!");
+
+      // Limpa os inputs após o sucesso
+      inputName.current.value = "";
+      inputAge.current.value = "";
+      inputEmail.current.value = "";
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error);
+      const errorMessage =
+        error.response?.data?.message || "Erro ao conectar com o servidor.";
+      alert(`Erro: ${errorMessage}`);
+    }
   }
+
+  const navigate = useNavigate();
 
   return (
     <Container>
-      <TopBackground>
-        <img src={USERSIMG} alt="Usuários" />
-      </TopBackground>
-      <Form>
+      <TopBackground />
+
+      <Form onSubmit={handleRegisterUser}>
         <Title>Cadastro de Usuário</Title>
+
         <ContainerInput>
           <div>
             <InputLabel>
               Nome<span> *</span>
             </InputLabel>
-
             <Input type="text" placeholder="Nome do usuário" ref={inputName} />
           </div>
+
           <div>
             <InputLabel>
               Idade<span> *</span>
             </InputLabel>
-
             <Input type="number" placeholder="Idade" ref={inputAge} />
           </div>
         </ContainerInput>
@@ -60,10 +86,15 @@ function Home() {
           </InputLabel>
           <Input type="email" placeholder="E-mail" ref={inputEmail} />
         </div>
-        <Button type="button" onClick={handleRegisterUser}>
+
+        <Button type="submit" theme="primary">
           Cadastrar usuário
         </Button>
       </Form>
+
+      <Button type="button" onClick={() => navigate("/lista-de-usuarios")}>
+        Lista de usuários
+      </Button>
     </Container>
   );
 }
