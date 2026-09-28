@@ -1,9 +1,19 @@
 import api from "../../services/api";
-
-import { Button } from "../../components/Button";
-import { TopBackground } from "../../components/TopBackground";
-import { Container, Title } from "./styles";
 import { useEffect, useState } from "react";
+
+import { TopBackground } from "../../components/TopBackground";
+import { Button } from "../../components/Button";
+
+import Trash from "../../assets/trash.svg";
+
+import {
+  Container,
+  Title,
+  ContainerUsers,
+  CardUser,
+  AvatarIcon,
+  TrashIcon,
+} from "./styles";
 
 function ListUsers() {
   const [users, setUsers] = useState([]);
@@ -31,13 +41,22 @@ function ListUsers() {
       <TopBackground />
       <Title>List Usuários</Title>
 
-      {users.map((user) => (
-        <div key={user.id}>
-          <p>Nome: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Idade: {user.age}</p>
-        </div>
-      ))}
+      <ContainerUsers>
+        {users.map((user) => (
+          <CardUser key={user.id}>
+            <AvatarIcon
+              src={`https://api.dicebear.com/10.x/adventurer-neutral/svg?seed=${user.id}`}
+            />
+            <div>
+              <h3>{user.name}</h3>
+              <p>{user.age}</p>
+              <p>{user.email}</p>
+            </div>
+            <TrashIcon src={Trash} alt="Excluir" />
+          </CardUser>
+        ))}
+      </ContainerUsers>
+
       <Button theme="primary" onClick={() => window.history.back()}>
         voltar
       </Button>
