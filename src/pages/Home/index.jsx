@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router";
 import api from "../../services/api";
+import toast, { Toaster } from "react-hot-toast";
 
 import {
   Container,
@@ -29,7 +30,11 @@ function Home() {
 
     // Validação simples no front-end
     if (!name || !age || !email) {
-      alert("Por favor, preencha todos os campos obrigatórios.");
+      toast("Por favor, preencha todos os campos obrigatórios.", {
+        duration: 2000,
+        position: "top-center",
+        icon: "⚠️",
+      });
       return;
     }
 
@@ -41,7 +46,9 @@ function Home() {
       });
 
       console.log("Usuário criado:", response.data);
-      alert("Usuário cadastrado com sucesso!");
+      toast.success("Usuário cadastrado com sucesso!", {
+        duration: 2000,
+      });
 
       // Limpa os inputs após o sucesso
       inputName.current.value = "";
@@ -51,7 +58,7 @@ function Home() {
       console.error("Erro ao cadastrar:", error);
       const errorMessage =
         error.response?.data?.message || "Erro ao conectar com o servidor.";
-      alert(`Erro: ${errorMessage}`);
+      toast.error(`Erro: ${errorMessage}`);
     }
   }
 
@@ -95,6 +102,8 @@ function Home() {
       <Button type="button" onClick={() => navigate("/lista-de-usuarios")}>
         Lista de usuários
       </Button>
+
+      <Toaster />
     </Container>
   );
 }
